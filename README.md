@@ -1,0 +1,1 @@
+In order to exercise the functionality of Graviton mass updates incorporating remote EC2 graviton builders, an automated mass update script is developed to use across application/project repositories build process
