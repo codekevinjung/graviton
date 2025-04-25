@@ -1,0 +1,20 @@
+#!/bin/bash 
+sudo apt update -y
+sudo apt-get update
+sudo apt install default-jre -y
+java -version
+sudo apt-get install git
+sudo apt install python3-pip -y
+sudo apt-get install awscli -y
+sudo apt install docker.io -y
+mkdir -p /home/ubuntu/.docker 
+echo -e '{\n "experimental":"enabled"\n}' | tee /home/ubuntu/.docker/config.json
+mkdir -p /home/ubuntu/.docker/cli-plugins/ 
+wget -O /home/ubuntu/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.8.2/buildx-v0.8.2.linux-arm64
+chmod a+x /home/ubuntu/.docker/cli-plugins/docker-buildx
+echo "Download complete."
+sudo usermod -aG docker ubuntu
+grep /etc/group -e "docker"
+sudo chown -R ubuntu:ubuntu /home/ubuntu/.docker
+echo "Adding public ssh key to authorized keys"
+aws secretsmanager get-secret-value --secret-id id_rsa_pub --region us-east-2 --query SecretString --output text | cut -d: -f2 | tr -d \"} > ~/.ssh/authorized_keys
